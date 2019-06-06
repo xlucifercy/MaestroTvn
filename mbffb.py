@@ -9,7 +9,7 @@ import cookielib
 GHT = '''
 '''
 print "Gunakan Dengan Bijak"
-print "CTRL+C Untuk Keluar"
+print "Facebook: Maestro"
 print "Thanks To Maestro"
 
 
